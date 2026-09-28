@@ -1,0 +1,12 @@
+# Qt 构建产物
+build/
+build-*/
+*.o
+*.obj
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Makefile*
+.qtc_clangd/
+CMakeLists.txt.user
+*.pro.user
