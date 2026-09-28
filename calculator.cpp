@@ -276,7 +276,9 @@ double Calculator::evaluate(const QString &src, bool *ok, QString *reason) const
             if (!numOk) { *reason = "表达式错误"; return 0; }
             toks.append({Tok::NUM, v, QChar()});
             i = j;
-        } else if (c == '+' || c == '-' || c == '×' || c == '÷') {
+        } else if (c == '+' || c == '-'
+                   || c == QChar(0x00D7)   // ×
+                   || c == QChar(0x00F7)) {// ÷  非ASCII字符须用码点比较，避免多字符常量
             toks.append({Tok::OP, 0, c});
             ++i;
         } else if (c == '(') {
@@ -330,7 +332,7 @@ double Calculator::evaluate(const QString &src, bool *ok, QString *reason) const
         switch (t.op.unicode()) {
         case '+': st.append(a + b); break;
         case '-': st.append(a - b); break;
-        case '×': st.append(a * b); break;
+        case 0x00D7: st.append(a * b); break;   // ×
         default:
             if (b == 0.0) { *reason = "除数为 0"; return 0; }
             st.append(a / b);
