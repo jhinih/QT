@@ -189,3 +189,52 @@ void Calculator::abortOperation()
     justCalculated     = false;
     errorState         = true;
 }
+
+// ==================== 键盘事件处理 ====================
+// 思路：把按键映射到对应 QPushButton，调用 click()，
+// 完全复用鼠标点击的那一套槽函数，避免逻辑重复（实验要求 4）
+void Calculator::keyPressEvent(QKeyEvent *event)
+{
+    const int key = event->key();
+
+    // 错误状态下仅允许 C / Del / Esc 清除
+    if (errorState && key != Qt::Key_C && key != Qt::Key_Delete
+                   && key != Qt::Key_Escape) {
+        event->accept();
+        return;
+    }
+
+    switch (key) {
+    case Qt::Key_0: ui->btn0->click(); break;
+    case Qt::Key_1: ui->btn1->click(); break;
+    case Qt::Key_2: ui->btn2->click(); break;
+    case Qt::Key_3: ui->btn3->click(); break;
+    case Qt::Key_4: ui->btn4->click(); break;
+    case Qt::Key_5: ui->btn5->click(); break;
+    case Qt::Key_6: ui->btn6->click(); break;
+    case Qt::Key_7: ui->btn7->click(); break;
+    case Qt::Key_8: ui->btn8->click(); break;
+    case Qt::Key_9: ui->btn9->click(); break;
+
+    case Qt::Key_Period:
+    case Qt::Key_Comma:          ui->btnPoint->click();     break;
+
+    case Qt::Key_Plus:           ui->btnAdd->click();       break;
+    case Qt::Key_Minus:          ui->btnSub->click();       break;
+    case Qt::Key_Asterisk:       ui->btnMul->click();       break;
+    case Qt::Key_Slash:          event->accept();
+                                 ui->btnDiv->click();       break;
+
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+    case Qt::Key_Equal:          ui->btnEqual->click();     break;
+
+    case Qt::Key_Backspace:      ui->btnBackspace->click(); break;
+    case Qt::Key_Delete:
+    case Qt::Key_Escape:
+    case Qt::Key_C:              ui->btnClear->click();     break;
+
+    default:                     QWidget::keyPressEvent(event); return;
+    }
+    event->accept();
+}

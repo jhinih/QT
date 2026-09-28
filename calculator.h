@@ -20,6 +20,8 @@ public:
     ~Calculator();
 
 protected:
+    void keyPressEvent(QKeyEvent *event) override;   // 键盘事件入口
+
 private slots:
     void digitClicked();        // 数字键 0~9（共用，sender() 区分）
     void pointClicked();        // 小数点
