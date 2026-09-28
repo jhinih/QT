@@ -40,6 +40,11 @@ Calculator::Calculator(QWidget *parent)
     ui->setupUi(this);
     setStyleSheet(kStyleSheet);   // 统一按键外观
 
+    // 按键不接收焦点：否则按钮获得焦点后，Enter/空格会直接触发按钮点击，
+    // 与 keyPressEvent 重复处理同一按键（事件被处理两次的问题）
+    for (QPushButton *btn : findChildren<QPushButton *>())
+        btn->setFocusPolicy(Qt::NoFocus);
+
     // ---- 计算状态初始化 ----
     firstOperand       = 0.0;
     pendingOperator    = QString();     // 无等待执行的操作符
