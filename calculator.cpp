@@ -6,11 +6,39 @@
 #include <cmath>
 #include <limits>
 
+// 样式表：模拟手机计算器深色配色（实验步骤五）
+static const char *kStyleSheet = R"(
+Calculator { background-color: #2b2b2b; }
+QLineEdit#display {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: none;
+    padding: 8px;
+}
+QPushButton {
+    background-color: #4e4e4e;
+    color: #ffffff;
+    border: none;
+    border-radius: 26px;
+    font-size: 16px;
+}
+QPushButton:hover  { background-color: #5e5e5e; }
+QPushButton:pressed{ background-color: #7a7a7a; }
+QPushButton#btnClear, QPushButton#btnBackspace {
+    background-color: #a5a5a5; color: #000000;
+}
+QPushButton#btnDiv, QPushButton#btnMul,
+QPushButton#btnSub, QPushButton#btnAdd, QPushButton#btnEqual {
+    background-color: #ff9f0a;
+}
+)";
+
 Calculator::Calculator(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Calculator)
 {
     ui->setupUi(this);
+    setStyleSheet(kStyleSheet);   // 统一按键外观
 
     // ---- 计算状态初始化 ----
     firstOperand       = 0.0;
