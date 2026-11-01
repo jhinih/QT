@@ -1,0 +1,7 @@
+build/
+build-*/
+*.user
+*.user.*
+CMakeCache.txt
+CMakeFiles/
+.qmake.stash
